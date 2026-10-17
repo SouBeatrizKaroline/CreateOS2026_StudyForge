@@ -1,0 +1,9 @@
+.env
+.env.*
+.git
+.projects
+node_modules
+test
+outputs
+work
+*.log
