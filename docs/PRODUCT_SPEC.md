@@ -1,10 +1,13 @@
 # StudyForge MVP specification
 
 ## Product promise
-An AI study partner that builds executable experiments so students learn by exploring.
+An AI study partner that builds executable experiments so university students learn by exploring.
 
 ## Primary user
-A high-school or introductory university student studying mathematical functions or projectile motion.
+An undergraduate studying Calculus I, especially in engineering, computer science, mathematics, or economics.
+
+## Product direction
+Future labs can cover linear algebra, statistics, and university physics. The hackathon MVP focuses on Calculus I only. Provide guided reasoning, predictions, and hints rather than automatic assignment completion.
 
 ## Core journey
 1. Select English, Português (Brasil), or Español.
@@ -15,11 +18,12 @@ A high-school or introductory university student studying mathematical functions
 6. Answer three questions, requesting hints when needed.
 
 ## First supported experiment
-Projectile motion without air resistance.
-Inputs: initial speed, launch angle, and gravity.
-Validate units, finite numbers, positive gravity, bounded speed, and angle between 0 and 90 degrees.
-Check flight time, range, and maximum height against known analytical formulas. Label the simplifying assumptions.
-Return a trajectory image and structured numerical results. Explain why 45 degrees maximizes range only under the stated equal-height assumptions.
+Numerical differentiation for f(x) = x².
+Inputs: evaluation point x and a bounded sequence of positive step sizes h.
+The agent generates Python to compute forward differences, compare them with the analytic derivative 2x, and draw secant and tangent lines.
+Validate finite inputs, bound x and h, and cap the number of samples. At x = 2 and h = 0.1, the forward difference should be 4.1; the analytic derivative is 4.
+Display absolute error as h decreases and explain truncation error and floating-point limitations. Do not claim smaller h always improves accuracy.
+Use a fixed allowlist of functions for the first version; never evaluate arbitrary student expressions on the server.
 
 ## Agent contract
 Input: topic, level, locale, and validated parameters.
