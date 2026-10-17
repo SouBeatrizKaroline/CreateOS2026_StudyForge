@@ -41,7 +41,10 @@ $('lab').onsubmit=async e=>{
   for(const id of ['run','preview','fn','x','h','locale'])$(id).disabled=true;
   $('status').textContent=t().working;$('trace').replaceChildren();$('source').textContent=t().noCode;
   try{
-    const selected=input();const response=await fetch('/api/lab',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(selected)});
+    const accessText={en:'Enter the private demo access code','pt-BR':'Digite o código privado de acesso à demonstração',es:'Introduce el código privado de acceso a la demostración'};
+    const accessCode=window.prompt(accessText[locale]);
+    if(!accessCode)throw new Error('ACCESS_REQUIRED');
+    const selected=input();const response=await fetch('/api/lab',{method:'POST',headers:{'Content-Type':'application/json','X-Lab-Access':accessCode},body:JSON.stringify(selected)});
     if(!response.ok)throw new Error('PROVIDER_ERROR');
     const reader=response.body.getReader(),decoder=new TextDecoder();let pending='',completed=false;
     while(true){const{value,done}=await reader.read();pending+=decoder.decode(value||new Uint8Array(),{stream:!done});const lines=pending.split('\n');pending=lines.pop();for(const line of lines){if(!line.trim())continue;const event=JSON.parse(line);if(event.stage==='error')throw new Error(event.code);if(event.stage==='complete'){result=event.result;labInput=selected;completed=true;$('sample').value='0';renderContent();$('status').textContent=cleanupFailed?t().cleanupWarning:t().done;}else{events.push(event);if(event.code)$('source').textContent=event.code;const li=document.createElement('li');li.textContent=(t().events[event.stage]||event.stage)+(event.attempt?' · '+event.attempt:'');$('trace').append(li);if(event.stage==='cleanupFailed')cleanupFailed=true;}}if(done)break;}
