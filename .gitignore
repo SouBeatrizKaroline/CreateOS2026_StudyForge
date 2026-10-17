@@ -11,3 +11,6 @@ __pycache__/
 work/
 *.log
 .DS_Store
+
+.projects/vault/
+.projects/cache/
