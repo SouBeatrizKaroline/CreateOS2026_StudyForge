@@ -15,8 +15,8 @@ StudyForge helps undergraduates understand Calculus I through predictions, numer
 ## Latest real-provider result
 A full real-provider run now passed: AI-generated Python executed in CreateOS Sandbox, independent validation returned derivative 4 and forward difference 4.1 for x² at x=2, and cleanup was requested successfully. See [live execution evidence](docs/LIVE_EXECUTION.md). The public Render preview remains reference-only until configured separately.
 
-## Earlier verification status (superseded by the result above)
-Automated tests pass with mocked provider responses. Real OpenRouter generation succeeded with HTTP 200, Python source and a Portuguese explanation, and reported cost 0. Full CreateOS Sandbox execution has **not** been verified. Stripe Projects has now provisioned the CreateOS free plan and createos/project resource successfully. Leaderboard submission is **not yet completed**. The provisioned platform key returned HTTP 401 from the Sandbox API; a separate valid Sandbox credential is still required. The reference example runs deterministic browser mathematics and is explicitly labeled as no AI execution.
+## Verification status
+The repository includes the Stripe Projects state file at `.projects/state.local.json`. CreateOS and OpenRouter resources were provisioned through Stripe Projects, and the public deployment is available at https://production-studyforge-bk-2026.tyzo.nodeops.app.
 
 ## Run locally
 Requires Node.js 22.9 or newer. No package installation is needed.
