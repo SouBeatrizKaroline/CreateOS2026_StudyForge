@@ -9,7 +9,7 @@ const server=createServer(async(req,res)=>{
   res.setHeader('Content-Security-Policy',"default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self' data:; frame-ancestors 'none'; base-uri 'none'; form-action 'self'");
   res.setHeader('Cache-Control','no-store');
   const url=new URL(req.url,'http://localhost');
-  if(req.method==='GET'&&url.pathname==='/api/status') {res.setHeader('Content-Type','application/json');res.end(JSON.stringify({ready:!!(process.env.CREATEOS_API_KEY&&process.env.OPENROUTER_API_KEY)}));return;}
+  if(req.method==='GET'&&url.pathname==='/api/status') {res.setHeader('Content-Type','application/json');res.end(JSON.stringify({ready:!!(process.env.CREATEOS_API_KEY&&(process.env.OPENROUTER_API_KEY||process.env.OPENROUTER_API_API_KEY))}));return;}
   if(req.method==='POST'&&url.pathname==='/api/lab') {
     // Reject cross-site and cross-origin requests before spending provider credits.
     if(req.headers['sec-fetch-site']==='cross-site'||(req.headers.origin&&req.headers.origin!==`http://${req.headers.host}`&&req.headers.origin!==`https://${req.headers.host}`)) {res.writeHead(403);res.end();return;}
