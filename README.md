@@ -1,22 +1,22 @@
 # StudyForge
 **Turn a study topic into an interactive lab you can run, explore, and understand.**
 
-StudyForge is a proposed AI learning agent for students, built for the CreateOS × Stripe Projects 2026 hackathon.
+StudyForge is a proposed AI learning agent for university students, built for the CreateOS × Stripe Projects 2026 hackathon.
 
 ## Status
 Concept and implementation plan. The application, agent execution, sponsor integrations, and deployment are not implemented yet. No demo or live service is claimed.
 
 ## The problem
-Students often read an explanation without being able to test what it means. Static answers do not reveal how changing a variable changes a result.
+University students often read an explanation without being able to test what it means. Static answers do not reveal how changing a variable changes a result.
 
 ## The solution
 A student describes a topic, chooses a language and difficulty, and receives a small interactive study lab. The agent generates Python code, runs it inside a CreateOS Sandbox, checks the output, and repairs execution failures before presenting a graph, explanation, and short practice exercise.
 
-**Example:** "Help me understand projectile motion."
-The agent writes a simulation, executes it, returns a trajectory chart, and lets the student compare launch angles and explain their observations.
+**Example:** "I am taking Calculus I. Show me why the derivative of x² at x = 2 is 4."
+The agent writes a numerical experiment, executes it, plots secant lines approaching the tangent, and asks the student to explain what changes as h approaches zero.
 
 ## MVP
-- One focused subject area: mathematics and physics.
+- One focused subject area: university Calculus I (derivatives and numerical approximation).
 - Text input for topic, learning level, and language.
 - Generated Python experiments with parameters and graphs.
 - Visible agent activity: plan → write → execute → inspect → repair (up to two attempts).
@@ -50,9 +50,9 @@ No PDF ingestion, accounts, payments, classroom management, or broad subject cov
 There is no runnable application yet. Implementation tasks and acceptance criteria are in [docs/PRODUCT_SPEC.md](docs/PRODUCT_SPEC.md).
 
 ## Hackathon demo
-1. Enter a projectile-motion study request in English.
+1. Enter a Calculus I derivative study request in English.
 2. Show the agent generating and executing Python in CreateOS.
-3. Display the resulting chart and change a launch parameter.
+3. Display the resulting chart and change the point or step size.
 4. Show a real repair trace if an execution fails; never stage a fake success.
 5. Switch to Portuguese or Spanish and show localized learning content.
 6. Explain the actual Stripe Projects configuration and CreateOS execution.
