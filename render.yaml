@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: studyforge-beatriz
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/status
+    envVars:
+      - key: HOST
+        value: 0.0.0.0
+      - key: PORT
+        value: "3000"
+      - key: CREATEOS_BASE_URL
+        value: https://api-eu.sb.createos.sh
+      - key: OPENROUTER_MODEL
+        value: nvidia/nemotron-3-super-120b-a12b:free
