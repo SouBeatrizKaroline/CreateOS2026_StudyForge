@@ -10,6 +10,8 @@ No paid plan was provisioned. Shared non-secret configuration is in .projects/st
 
 Credentials from this integration target the CreateOS platform API. Testing that platform credential against the EU Sandbox listing endpoint returned HTTP 401. It must not be treated as a verified Sandbox key. OPENROUTER_API_KEY is still unset.
 
-The installed Projects plugin v0.50.0 does not list a share command; `projects share --help` returned the general command list. Ask organizers for the supported Stack URL route rather than inventing a URL or claiming a valid share link exists.
+The installed Projects plugin v0.50.0 omits share from its general help, but running `stripe projects share --json` succeeded. Official Stack URL: https://projects.dev/s#v1:createos~project
+
+OpenRouter/free is available in the catalog with zero-cost free models and no credit card required. Provisioning is pending separate user consent to OpenRouter terms and privacy policy.
 
 Remaining: valid Sandbox credentials/credits, AI credentials, real end-to-end execution, video, public post, official form, leaderboard submission.
