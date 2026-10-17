@@ -13,7 +13,7 @@ StudyForge helps undergraduates understand Calculus I through predictions, numer
 - Nine automated tests covering math, orchestration, repair, cleanup, and translations.
 
 ## Current verification status
-Automated tests pass with mocked provider responses. Live provider execution has **not** been verified because credentials are not configured. Stripe Projects provisioning and leaderboard submission are **not yet completed**. The reference example runs deterministic browser mathematics and is explicitly labeled as no AI execution.
+Automated tests pass with mocked provider responses. Live provider execution has **not** been verified because credentials are not configured. Stripe Projects has now provisioned the CreateOS free plan and createos/project resource successfully. Leaderboard submission is **not yet completed**. The provisioned platform key returned HTTP 401 from the Sandbox API; a separate valid Sandbox credential is still required. The reference example runs deterministic browser mathematics and is explicitly labeled as no AI execution.
 
 ## Run locally
 Requires Node.js 22.9 or newer. No package installation is needed.
@@ -63,7 +63,8 @@ The server binds to loopback by default and permits only one live run at a time.
 Show a team member on camera, enter a Calculus I experiment, generate real Python, show the actual sandbox execution, change h, and compare the approximation. Switch languages and explain the actual sponsor configuration. Do not present the reference example as a live AI run.
 
 - [ ] Configure and verify both keys with a real lab
-- [ ] Provision the stack through Stripe Projects and save Stack URL
+- [x] Provision CreateOS free plan and project through Stripe Projects
+- [ ] Obtain a real Stack URL using the event-supported sharing workflow
 - [ ] Record a 2–3 minute video with a member on camera
 - [ ] Publish the required X or LinkedIn post tagging CreateOS
 - [ ] Submit the official event form
