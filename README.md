@@ -1,70 +1,79 @@
 # StudyForge
-**Turn a study topic into an interactive lab you can run, explore, and understand.**
+**Turn university concepts into executable learning labs.**
 
-StudyForge is a proposed AI learning agent for university students, built for the CreateOS × Stripe Projects 2026 hackathon.
+StudyForge helps undergraduates understand Calculus I through predictions, numerical experiments, charts, and guided questions. English is the default, with Brazilian Portuguese and Spanish available throughout the interface.
 
-## Status
-Concept and implementation plan. The application, agent execution, sponsor integrations, and deployment are not implemented yet. No demo or live service is claimed.
+## Implemented
+- Interactive derivative labs for x², x³, and sin(x).
+- Predict the slope, compare secants with tangents, and change step size.
+- Three fully translated interfaces and reference explanations.
+- Live agent integration: generate Python through OpenRouter, execute only in CreateOS Sandbox, validate numerical output independently, and repair up to twice.
+- Actual execution event stream and generated-source inspection.
+- Sandbox polling, restricted egress, execution timeout, and cleanup in a finally block.
+- Nine automated tests covering math, orchestration, repair, cleanup, and translations.
 
-## The problem
-University students often read an explanation without being able to test what it means. Static answers do not reveal how changing a variable changes a result.
+## Current verification status
+Automated tests pass with mocked provider responses. Live provider execution has **not** been verified because credentials are not configured. Stripe Projects provisioning and leaderboard submission are **not yet completed**. The reference example runs deterministic browser mathematics and is explicitly labeled as no AI execution.
 
-## The solution
-A student describes a topic, chooses a language and difficulty, and receives a small interactive study lab. The agent generates Python code, runs it inside a CreateOS Sandbox, checks the output, and repairs execution failures before presenting a graph, explanation, and short practice exercise.
+## Run locally
+Requires Node.js 22.9 or newer. No package installation is needed.
 
-**Example:** "I am taking Calculus I. Show me why the derivative of x² at x = 2 is 4."
-The agent writes a numerical experiment, executes it, plots secant lines approaching the tangent, and asks the student to explain what changes as h approaches zero.
+```sh
+cp .env.example .env
+# Fill in the two keys locally, then:
+node --env-file-if-exists=.env server.mjs
+```
 
-## MVP
-- One focused subject area: university Calculus I (derivatives and numerical approximation).
-- Text input for topic, learning level, and language.
-- Generated Python experiments with parameters and graphs.
-- Visible agent activity: plan → write → execute → inspect → repair (up to two attempts).
-- Output validation: successful exit, expected files, and basic numerical checks.
-- A short explanation and three practice questions with hints.
-- English by default; Brazilian Portuguese and Spanish selectable.
+On PowerShell, replace the first command with `Copy-Item .env.example .env`.
+Open http://localhost:3000. Without keys, the reference lab still works. `Generate AI lab` requires both provider keys. Run tests with `node --test`.
 
-## Languages
-Use locale identifiers `en`, `pt-BR`, and `es`.
-UI labels live in separate dictionaries. Pass the selected locale explicitly into explanation, hint, and exercise generation. Preserve mathematical notation and code identifiers when switching languages. Persist the language preference and fall back to English for missing labels.
+## Credentials and Brazil setup
+Brazil-based participation is allowed according to the organizers' Discord announcement; activating Stripe Payments or supplying US business details is not required for this event's Projects setup.
 
-## Proposed architecture
-1. Web interface sends topic, difficulty, parameters, and locale to a server API.
-2. An LLM generates a constrained Python experiment.
-3. The server uploads and executes the code in CreateOS Sandbox.
-4. The server reads exit status, stdout, stderr, and allowed output files.
-5. On failure, the agent patches its code and retries within a fixed limit.
-6. The interface displays the verified result, agent trace, explanation, and exercises.
+1. CreateOS: sign in at https://createos.sh/app and open Profile / API Keys (https://createos.sh/app/profile). Generate an API key and put it in `.env` as `CREATEOS_API_KEY`. Ask the event support team about hackathon credits if needed.
+2. OpenRouter: sign in at https://openrouter.ai and create a key at https://openrouter.ai/settings/keys. Put it in `.env` as `OPENROUTER_API_KEY`. Available model access and credits depend on your account. Optionally set `OPENROUTER_MODEL` to a model supporting JSON output; otherwise your OpenRouter default is used.
+3. Never paste keys into GitHub, public posts, screenshots, or chat. Keep `.env` local.
 
-**Stripe Projects:** provision and document the actual services used by the stack. Capture the resulting Stack URL for submission.
-**CreateOS Sandbox:** run the generated code in an isolated environment with execution time, output size, and network limits.
-**Proposed stack:** TypeScript web application and server API; Python for experiment execution. Final SDKs and commands must be verified against official documentation.
+## Stripe Projects — required before submission
+Install the official Stripe CLI, sign in, and run these commands from the project directory:
 
-## Learning design
-Ask the student to predict the result before revealing it. Offer hints before solutions. Relate the explanation to the executed experiment. A successful run verifies execution, not educational correctness; use curated numerical examples and explicit checks for the MVP.
+```sh
+stripe plugin install projects
+# If already installed: stripe plugin upgrade projects
+stripe projects init StudyForge
+stripe projects add createos/project
+stripe projects env --pull
+stripe projects status
+stripe projects share
+```
 
-## Scope boundaries
-No PDF ingestion, accounts, payments, classroom management, or broad subject coverage in the first version. No student personal data is required. Use synthetic examples in the demo. Do not run generated code on the application host.
+Use the Projects-specific onboarding if ordinary payments onboarding asks for business activation. Verify actual environment variable names emitted by the provider and map the sandbox credential to `CREATEOS_API_KEY` if needed. Preserve CLI-generated shared configuration but never publish credentials or vault files. Do not claim provisioning succeeded until the CLI confirms it. Save the share/Stack URL for the leaderboard. See the [official Stripe Projects guide](https://docs.stripe.com/projects) and the [hackathon guide](https://projects.dev/hackathon-participants).
 
-## Development
-There is no runnable application yet. Implementation tasks and acceptance criteria are in [docs/PRODUCT_SPEC.md](docs/PRODUCT_SPEC.md).
+## Architecture
+Browser → local Node server → OpenRouter (code and educational content) → CreateOS sandbox (Python) → independent server validation → chart and exercises.
 
-## Hackathon demo
-1. Enter a Calculus I derivative study request in English.
-2. Show the agent generating and executing Python in CreateOS.
-3. Display the resulting chart and change the point or step size.
-4. Show a real repair trace if an execution fails; never stage a fake success.
-5. Switch to Portuguese or Spanish and show localized learning content.
-6. Explain the actual Stripe Projects configuration and CreateOS execution.
+CreateOS REST uses `X-Api-Key` and JSend envelopes. The default endpoint is the EU endpoint announced for the event. The sandbox uses `devbox:1`, no public ingress, and an egress allowlist restricted to the reserved documentation address `192.0.2.1:443`; it needs no external packages. An empty egress list would allow all traffic and is deliberately avoided. Python is sent via stdin to `timeout 15 python3 -I -`; no generated code is executed on the application host. The generated environment receives no provider secrets.
 
-## Submission checklist
-- [ ] Working agent that generates and runs code in CreateOS Sandbox
-- [ ] Actual stack configured through Stripe Projects
-- [ ] Public repository with verified setup instructions
-- [ ] 2–3 minute video with a team member on camera
-- [ ] Public X or LinkedIn post tagging CreateOS
-- [ ] Official event submission form
-- [ ] Stripe Projects leaderboard submission with code `CreateOS-2026`
-- [ ] Confirm the final submission deadline in Discord
+Numerical results are checked against separate analytic and finite-difference references. Educational prose and generated questions still require human review. Explanations discuss floating-point limitations rather than promising monotonic improvement for arbitrarily small steps.
 
-Never commit API keys or `.env` files.
+## Deployment boundary
+The server binds to loopback by default and permits only one live run at a time. It rejects cross-origin requests. This is a local hackathon MVP: add authentication, per-user rate limits, spend limits, and stronger response-size streaming controls before exposing a public generation endpoint. Verify cleanup in the CreateOS dashboard if an API failure leaves a sandbox behind. There is no automatic provisioning, billing, or deployment.
+
+## Demo and submission
+Show a team member on camera, enter a Calculus I experiment, generate real Python, show the actual sandbox execution, change h, and compare the approximation. Switch languages and explain the actual sponsor configuration. Do not present the reference example as a live AI run.
+
+- [ ] Configure and verify both keys with a real lab
+- [ ] Provision the stack through Stripe Projects and save Stack URL
+- [ ] Record a 2–3 minute video with a member on camera
+- [ ] Publish the required X or LinkedIn post tagging CreateOS
+- [ ] Submit the official event form
+- [ ] Submit to https://projects.dev/leaderboard using `CreateOS-2026`
+- [ ] Confirm the deadline in Discord
+
+## Reference documentation
+- https://createos.sh/docs/Sandbox/REST-API/Sandboxes/
+- https://createos.sh/docs/Sandbox/REST-API/Execution-And-Files/
+- https://createos.sh/docs/Sandbox/REST-API/Egress/
+- https://openrouter.ai/docs/api_reference/overview
+
+See [the product specification](docs/PRODUCT_SPEC.md) for the original product scope.
