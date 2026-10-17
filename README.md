@@ -13,7 +13,7 @@ StudyForge helps undergraduates understand Calculus I through predictions, numer
 - Nine automated tests covering math, orchestration, repair, cleanup, and translations.
 
 ## Current verification status
-Automated tests pass with mocked provider responses. Live provider execution has **not** been verified because credentials are not configured. Stripe Projects has now provisioned the CreateOS free plan and createos/project resource successfully. Leaderboard submission is **not yet completed**. The provisioned platform key returned HTTP 401 from the Sandbox API; a separate valid Sandbox credential is still required. The reference example runs deterministic browser mathematics and is explicitly labeled as no AI execution.
+Automated tests pass with mocked provider responses. Real OpenRouter generation succeeded with HTTP 200, Python source and a Portuguese explanation, and reported cost 0. Full CreateOS Sandbox execution has **not** been verified. Stripe Projects has now provisioned the CreateOS free plan and createos/project resource successfully. Leaderboard submission is **not yet completed**. The provisioned platform key returned HTTP 401 from the Sandbox API; a separate valid Sandbox credential is still required. The reference example runs deterministic browser mathematics and is explicitly labeled as no AI execution.
 
 ## Run locally
 Requires Node.js 22.9 or newer. No package installation is needed.
@@ -31,7 +31,7 @@ Open http://localhost:3000. Without keys, the reference lab still works. `Genera
 Brazil-based participation is allowed according to the organizers' Discord announcement; activating Stripe Payments or supplying US business details is not required for this event's Projects setup.
 
 1. CreateOS: sign in at https://createos.sh/app and open Profile / API Keys (https://createos.sh/app/profile). Generate an API key and put it in `.env` as `CREATEOS_API_KEY`. Ask the event support team about hackathon credits if needed.
-2. OpenRouter: sign in at https://openrouter.ai and create a key at https://openrouter.ai/settings/keys. Put it in `.env` as `OPENROUTER_API_KEY`. Available model access and credits depend on your account. Optionally set `OPENROUTER_MODEL` to a model supporting JSON output; otherwise your OpenRouter default is used.
+2. OpenRouter: sign in at https://openrouter.ai and create a key at https://openrouter.ai/settings/keys. Put it in `.env` as `OPENROUTER_API_KEY`. Available model access and credits depend on your account. Optionally set `OPENROUTER_MODEL` to a model supporting JSON output; otherwise the application uses `nvidia/nemotron-3-super-120b-a12b:free`. Stripe-provisioned `OPENROUTER_API_API_KEY` is supported directly.
 3. Never paste keys into GitHub, public posts, screenshots, or chat. Keep `.env` local.
 
 ## Stripe Projects — required before submission
