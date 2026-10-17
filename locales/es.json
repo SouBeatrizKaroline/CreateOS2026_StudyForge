@@ -1,0 +1,17 @@
+{
+  "appName": "StudyForge",
+  "tagline": "Transforma un tema en un laboratorio de aprendizaje",
+  "topic": "¿Qué quieres entender?",
+  "level": "Nivel de aprendizaje",
+  "language": "Idioma",
+  "buildLab": "Crear mi laboratorio",
+  "prediction": "¿Qué crees que va a pasar?",
+  "running": "Tu agente está ejecutando el experimento",
+  "repairing": "Tu agente está corrigiendo el código",
+  "results": "Resultados del experimento",
+  "hint": "Mostrar una pista",
+  "retry": "Intentar de nuevo",
+  "error": "No se pudo completar el experimento. Inténtalo de nuevo.",
+  "execution": "Ejecución del código",
+  "practice": "Preguntas de práctica"
+}
