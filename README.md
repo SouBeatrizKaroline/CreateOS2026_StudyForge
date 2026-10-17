@@ -62,6 +62,9 @@ Numerical results are checked against separate analytic and finite-difference re
 ## Deployment boundary
 The server binds to loopback by default and permits only one live run at a time. It rejects cross-origin requests. This is a local hackathon MVP: add authentication, per-user rate limits, spend limits, and stronger response-size streaming controls before exposing a public generation endpoint. Verify cleanup in the CreateOS dashboard if an API failure leaves a sandbox behind. There is no automatic provisioning, billing, or deployment.
 
+## Demo video
+Watch the StudyForge demo: https://youtu.be/AsiWfsvnR5g
+
 ## Demo and submission
 Show a team member on camera, enter a Calculus I experiment, generate real Python, show the actual sandbox execution, change h, and compare the approximation. Switch languages and explain the actual sponsor configuration. Do not present the reference example as a live AI run.
 
